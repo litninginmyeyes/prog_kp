@@ -24,7 +24,7 @@ int play(char symb[SIZE][SIZE], int num[SIZE][SIZE]);
 int output_file(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
 
 int main() {
-	setlocale(LC_ALL, "RUS");
+	setlocale(LC_CTYPE, "RUS");
 	int cases;
 	int condition = 0;
 	char symb[SIZE][SIZE] =
