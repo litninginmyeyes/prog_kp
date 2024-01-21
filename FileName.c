@@ -15,6 +15,9 @@ typedef struct input Input;
 
 void draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
 Input input();
+void exit();
+char csave_input_file();
+int isave_input_file();
 int loss(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
 int check_input(Input a);
 int check_progress(Input a, char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
@@ -25,8 +28,6 @@ int output_file(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
 
 int main() {
 	setlocale(LC_CTYPE, "RUS");
-	int cases;
-	int condition = 0;
 	char symb[SIZE][SIZE] =
 	{
 		{' ',' ','E',' ',' '},
@@ -44,9 +45,8 @@ int main() {
 		{0,0,1,0,3}
 	};
 	
-	int h = 5, v = 2;
-	FILE* f;
-	FILE* m;
+	
+	
 	int cond;
 	puts("КВАДРАТ ЭЙЛЕРА");
 	puts("Выберите действие: 1 - Правила игры, 2 - Играть, 3 - Загрузить поле из нового файла\n4 - Загрузить поле из сохранённого файла 5 - Загрузить поле в файл, 6 - Выход");
@@ -63,28 +63,17 @@ int main() {
 		break;
 		
 	case 4:
-		f = fopen("output.txt", "r");
-		for (int i = 0; i < 5; i++)
-			for (int j = 0; j < 5; j++) {
-				symb[i][j] = fgets(symb, 1, f);
-				fseek(f, h, SEEK_SET);
-				h += 5;
-			}
-		for (int i = 0; i < 5; i++)
-			for (int j = 0; j < 5; j++) {
-				num[i][j] = fgets(num, 1, f);
-				fseek(f, v, SEEK_SET);
-				v += 2;
-			}
+		play(csave_input_file, isave_input_file);
 		break;
 	case 5:
 		puts("Для сохранения поля в файл введите 0 вместо ячейки и значений");
 		break;
 	case 6:
-		return 0;
+		exit();
+		break;
 	default: puts("Неверно выбранное действие");
 	}
-	draw(symb, num);
+	
 	return 1;
 
 }
@@ -212,7 +201,7 @@ char cfile_input() {
 }
 
 int ifile_input() {
-	int j = 2;
+	int k = 2;
 	char g[SIZE][SIZE];
 	FILE* f = fopen("input.txt", "r");
 
@@ -221,13 +210,11 @@ int ifile_input() {
 		return 0;
 	}
 
-	
-
 	for (int i = 0; i < 5; i++)
 		for (int j = 0; j < 5; j++) {
 			g[i][j] = fgets(g, 1, f);
-			fseek(f, j, SEEK_SET);
-			j += 2;
+			fseek(f, k, SEEK_SET);
+			k += 2;
 		}
 	fclose(f);
 	return g;
@@ -252,3 +239,45 @@ int ifile_input() {
 	fclose(m);
 	return 1;
 }
+
+ char csave_input_file() {
+	 FILE* f;
+	 int h = 5;
+	 char symb[SIZE][SIZE];
+	 f = fopen("output.txt", "r");
+	 if (f == NULL) {
+		 puts("Ошибка чтения");
+		 return 0;
+	 }
+	 for (int i = 0; i < 5; i++)
+		 for (int j = 0; j < 5; j++) {
+			 symb[i][j] = fgets(symb, 1, f);
+			 fseek(f, h, SEEK_SET);
+			 h += 5;
+		 }
+	 fclose(f);
+	 return symb;
+ }
+
+ int isave_input_file() {
+	 FILE* f;
+	 int v = 2;
+	 int num[SIZE][SIZE];
+	 f = fopen("output.txt", "r");
+	 if (f == NULL) {
+		 puts("Ошибка чтения");
+		 return 0;
+	 }
+	 for (int i = 0; i < 5; i++)
+		 for (int j = 0; j < 5; j++) {
+			 num[i][j] = fgets(num, 1, f);
+			 fseek(f, v, SEEK_SET);
+			 v += 2;
+		 }
+	 return num;
+ }
+
+
+ void exit() {
+	 puts("Игра завершена");
+ }
