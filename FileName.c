@@ -13,9 +13,9 @@ struct input {
 };
 typedef struct input Input;
 
-void draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
+int draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
 Input input();
-void exit();
+int exit();
 char csave_input_file();
 int isave_input_file();
 int loss(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]);
@@ -118,7 +118,7 @@ int play(char symb[SIZE][SIZE], int num[SIZE][SIZE]) {
 }
 
 
-void draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]) {
+int draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]) {
 	printf("    1    2    3    4    5\n");
 	printf("  --------------------------\n");
 	printf("1 | %c%i | %c%i | %c%i | %c%i | %c%i |\n", arr[0][0], arr2[0][0], arr[0][1], arr2[0][1], arr[0][2], arr2[0][2], arr[0][3], arr2[0][3], arr[0][4], arr2[0][4]);
@@ -131,6 +131,8 @@ void draw(char arr[SIZE][SIZE], int arr2[SIZE][SIZE]) {
 	printf("  --------------------------\n");
 	printf("5 | %c%i | %c%i | %c%i | %c%i | %c%i |\n", arr[4][0], arr2[4][0], arr[4][1], arr2[4][1], arr[4][2], arr2[4][2], arr[4][3], arr2[4][3], arr[4][4], arr2[4][4]);
 	printf("  --------------------------\n");
+
+	return 1;
 }
 
 
@@ -278,6 +280,8 @@ int ifile_input() {
  }
 
 
- void exit() {
+ int exit() {
 	 puts("Игра завершена");
+
+	 return 1;
  }
